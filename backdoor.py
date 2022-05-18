@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+#-------------------------------------------------------------------------------
+#
+# Name: n4oth8hXX0r
+# Author : N03 Tri\m4x
+# ECTF{N07_7H47_C13V3r_70_137_1NF0rM4710N5_A80U7_Y0Ur531F}
+# 
+#-------------------------------------------------------------------------------
+
 import re,socket,subprocess,os,sys,urllib2,urllib,ctypes,time,threading,random,itertools,platform,multiprocessing,subprocess,fcntl,select,ssl,json
 from string import letters,split,rstrip
 from binascii import unhexlify
