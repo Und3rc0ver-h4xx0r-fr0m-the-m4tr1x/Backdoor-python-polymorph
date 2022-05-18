@@ -21,3 +21,18 @@ def getPoisonIPs():
             if x[0] != myip:
                 poison.append((x[0], x[3]))
     return poison
+
+def get_src_mac():
+    mac_dec = hex(getnode())[2:-1]
+    while (len(mac_dec) != 12):
+        mac_dec = "0" + mac_dec
+    return unhexlify(mac_dec)
+
+
+def create_dst_ip_addr():
+    dst_ip_addr = ''
+    ip_src_dec = argv[2].split(".")
+    for i in range(len(ip_src_dec)):
+        dst_ip_addr += chr(int(ip_src_dec[i]))
+    return dst_ip_addr
+
